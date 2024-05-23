@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        .container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+        .profile-info, .update-profile {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form {
+            max-width: 100%;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"],
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <div class="container">
+        <div class="profile-info">
+            <h2>User Profile Info</h2>
+            <form id="profileForm" action="{{ url_for('profile') }}" method="POST">
+                <p><strong>Name:</strong> {{ current_user.name }}</p>
+                <p><strong>Email:</strong> {{ current_user.email }}</p>
+                <p><strong>City:</strong> <input type="text" id="city" name="city" value="{{ current_user.city }}"></p>
+                <p><strong>Country:</strong> <input type="text" id="country" name="country" value="{{ current_user.country }}"></p>
+                <p><strong>Phone:</strong> <input type="text" id="phone" name="phone" value="{{ current_user.phone }}"></p>
+                <p><strong>Birthdate:</strong> <input type="date" id="birthdate" name="birthdate" value="{{ current_user.birthdate }}"></p>
+                <p><strong>Gender:</strong> 
+                    <select id="gender" name="gender">
+                        <option value="Male" {% if current_user.gender == 'Male' %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if current_user.gender == 'Female' %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if current_user.gender == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
+                </p>
+                <button type="submit">Güncelle ve Kaydet</button>
+            </form>
+        </div>
+        
+        <div class="update-profile">
+            <h2>Update Profile</h2>
+            <form id="updateForm" action="{{ url_for('update_profile') }}" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ current_user.name }}"><br>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ current_user.email }}"><br>
+                
+                <label for="current_password">Current Password:</label>
+                <input type="password" id="current_password" name="current_password">
+                <input type="checkbox" id="show_current_password" onclick="togglePassword('current_password')"> Show Password<br>
+                
+                <label for="new_password">New Password:</label>
+                <input type="password" id="new_password" name="new_password">
+                <input type="checkbox" id="show_new_password" onclick="togglePassword('new_password')"> Show Password<br>
+                
+                <label for="confirm_password">Confirm New Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password">
+                <input type="checkbox" id="show_confirm_password" onclick="togglePassword('confirm_password')"> Show Password<br>
+        
+                <input type="submit" value="Update Profile">
+            </form>
+        </div>
+    </div>
+
+    <button onclick="window.location.href='{{ url_for('index') }}'">Back to Home</button>
+
+    <script>
+        function togglePassword(passwordFieldId) {
+            var passwordField = document.getElementById(passwordFieldId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>

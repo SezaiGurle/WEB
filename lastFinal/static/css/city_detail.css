@@ -1,0 +1,44 @@
+#cityImage {
+    max-width: 175%;
+    height: 500px;
+    border-radius: 15px; 
+    margin-left: 35%;
+}
+#Comments {
+    border: 1px solid #ddd; /* Add a border around the comments section */
+    height: 300px; /* Set a fixed height for the comments section */
+    overflow-y: scroll; /* Add a vertical scrollbar to the comments section */
+}
+
+/* Add padding to the comments container */
+.scrollspy-example {
+    padding: 10px;
+}
+.navbar-nav a.nav-link {
+color: gray !important;
+}
+
+
+.navbar-brand {
+color: gray !important;
+}
+
+.footer {
+margin-top: 20px;
+padding-top: 20px;
+}
+.comment {
+    background-color: rgba(255, 255, 255, 0.9); /* Şeffaf arka plan */
+    border-radius: 10px; /* Yumuşak köşeler */
+    padding: 15px; /* Dolgular */
+    margin-bottom: 15px; /* Yorumlar arası boşluk */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}
+
+#AddComment {
+    background-color: rgba(255, 255, 255, 0.9); /* Şeffaf arka plan */
+    border-radius: 10px; /* Yumuşak köşeler */
+    padding: 20px; /* Dolgular */
+    margin-bottom: 30px; /* Form ile yorumlar arası boşluk */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}

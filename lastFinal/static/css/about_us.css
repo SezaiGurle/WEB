@@ -1,0 +1,28 @@
+.feature-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+}
+
+.btn-outline-warning:hover {
+    background-color: blue;
+    border-color: blue;
+    color: white;
+}
+
+.btn {
+    border-color: lightgray;
+}
+
+.overflow-hidden {
+    margin-bottom: 15px;
+}
+
+.card-img-top {
+  height: 250px; /* You can adjust the height as needed */
+  object-fit: cover;
+}
+#cards{
+  margin-left: 10px;
+  margin-right: 10px;
+}
