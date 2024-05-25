@@ -14,11 +14,9 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/icons8-beach-50.png') }}"
-          alt="moveit brand icon" height="30" />
+      <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/icons8-beach-50.png') }}" alt="moveit brand icon" height="30" />
         Trippy</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -53,21 +51,24 @@
       </div>
     </div>
   </nav>
-  
-  
+
   <div class="container mt-3">
     <div class="row">
-      <div class="col-md-12 text-center city-name" style="font-family: 'Italianno', cursive;">
+      <div class="col-md-12 text-center city-name">
         <h1>{{ city.city_name }}</h1>
       </div>
-      <div class="col-md-6 text-center">
+    </div>
+    <div class="row city-image-container">
+      <div class="col-md-6">
         <img id="cityImage" src="{{ city.image_url }}" alt="Sehir Resmi" class="img-fluid hotel-image">
       </div>
     </div>
-    <div class="col-md-6 text-center mx-auto">
-      <div class="explore-info">
-        <h4>Description </h4>
-        <p>{{ city.city_description }}</p>
+    <div class="row">
+      <div class="col-md-12 text-center mx-auto">
+        <div class="explore-info">
+          <h4>Description</h4>
+          <p>{{ city.city_description }}</p>
+        </div>
       </div>
     </div>
     <hr>
@@ -97,67 +98,66 @@
         </div>
       </div>
       {% if city.places_of_interest %}
-      <div class="col-md-6 text-center">
-          <div class="explore-info">
-              <h4>Places of Interest</h4>
-              <p>{{ city.places_of_interest }}</p>
-          </div>
+      <div class="col-md-12 text-center">
+        <div class="explore-info">
+          <h4>Places of Interest</h4>
+          <p>{{ city.places_of_interest }}</p>
+        </div>
       </div>
       {% endif %}
     </div>
-    
+
     <div class="container mt-3">
       <div data-bs-spy="scroll" id="Comments" class="row scrollspy-example">
         <div class="col-md-12 text-center">
-            <h2>Comments</h2>
-            {% for comment in comments %}
-            <div class="comment">
-                <p><strong>{{ comment.user.name }}</strong>: {{ comment.text }}</p>
-                {% if comment.photo_url %}
-                <img src="{{ comment.photo_url }}" alt="Comment Photo" style="max-width: 200px; max-height: 200px;">
-                {% endif %}
-            </div>
-            {% endfor %}
+          <h2>Comments</h2>
+          {% for comment in comments %}
+          <div class="comment">
+            <p><strong>{{ comment.user.name }}</strong>: {{ comment.text }}</p>
+            {% if comment.photo_url %}
+            <img src="{{ comment.photo_url }}" alt="Comment Photo" style="max-width: 200px; max-height: 200px;">
+            {% endif %}
+          </div>
+          {% endfor %}
         </div>
-    </div>
-    <div id="AddComment" class="row">
-        <div class="col-md-12 text-center">
-            <form method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="comment_text">Add a Comment:</label>
-                    <textarea class="form-control" id="comment_text" name="comment_text" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="photo">Upload a Photo:</label>
-                    <input type="file" class="form-control-file" id="photo" name="photo">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
-    
-    <div class="row" id="harita">
-      <div class="col-md-12 text-center">
-        <h4>Harita</h4>
-        <div id="map" style="height: 400px; width: 100%;">
-          Harita yükleniyor...
-        </div>
-        
       </div>
-      <button id="showRouteButton" class="btn btn-primary">Rota Göster</button>
+      <div id="AddComment" class="row">
+        <div class="col-md-12 text-center">
+          <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="comment_text">Add a Comment:</label>
+              <textarea class="form-control" id="comment_text" name="comment_text" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="photo">Upload a Photo:</label>
+              <input type="file" class="form-control-file" id="photo" name="photo">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
 
+      <div id="harita-container" class="row">
+        <div class="col-md-12 text-center">
+            <h4>Harita</h4>
+            <div id="map">
+                Harita yükleniyor...
+            </div>
+        </div>
+        <button id="showRouteButton" class="btn btn-primary">Rota Göster</button>
+    </div>    
+
+      <footer class="footer">
+        <!-- Footer içeriği -->
+      </footer>
     </div>
-    
-    <footer class="footer">
-      <!-- Footer içeriği -->
-    </footer>
+
+    <script src="{{ url_for('static', filename='js/city_detail.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSk0bKJzNNPaIqd6EmsSrWOdibBbmt00c&libraries=places&callback=initMap" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </div>
-  
-  <script src="{{ url_for('static', filename='js/city_detail.js') }}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsSkt_iK8otxGx2aUpKZe6gzvbR4MZCZI&libraries=places&callback=initMap"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

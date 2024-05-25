@@ -7,14 +7,15 @@
   <title>Explore</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
-
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/icons8-beach-50.png') }}" alt="brand-picture" height="30"> Trippy</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/icons8-beach-50.png') }}"
+          alt="brand-picture" height="30"> Trippy</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -35,19 +36,13 @@
         <ul class="navbar-nav ml-auto">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            {% if current_user.is_authenticated %}
             <span>Welcome, <a href="{{ url_for('profile') }}" class="btn btn-primary">{{ current_user.name }}</a></span>
-            {% else %}
-                <span>Welcome, Guest</span>
-            {% endif %}
           </li>
-          
           {% if current_user.is_admin %}
           <li class="nav-item">
             <a class="btn btn-outline-primary" href="{{ url_for('admin_panel') }}">Admin Panel</a>
           </li>
           {% endif %}
-          
           <li class="nav-item">
             <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">Log Out</a>
           </li>
@@ -56,27 +51,11 @@
             <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Login</a>
           </li>
           {% endif %}
-          
         </ul>
-
       </div>
     </div>
   </nav>
-
-  <form method="POST" action="{{ url_for('city_recommendation') }}" class="text-center mt-3">
-    <button type="submit" name="recommendation_button" value="yes" class="btn btn-outline-primary">Get City Recommendation</button>
-  </form>
   <div class="px-4 pt-5 my-5 text-center border-bottom">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if not current_user.is_authenticated %}
-    {% for category, message in messages %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     <h1 class="display-4 fw-bold text-primary">Trippy</h1>
     <div class="col-lg-6 mx-auto">
       <form action="{{ url_for('index') }}" method="POST" class="d-flex search-form">
@@ -85,9 +64,23 @@
           <img src="{{ url_for('static', filename='images/icons8-search-50.png') }}" alt="search" height="30">
         </button>
       </form>
-
     </div>
   </div>
+  <form method="POST" action="{{ url_for('city_recommendation') }}" class="text-center mt-3">
+    <button type="submit" name="recommendation_button" value="yes" class="btn btn-outline-primary">Get City
+      Recommendation</button>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if not current_user.is_authenticated %}
+  {% for category, message in messages %}
+  <div class="alert alert-info alert-dismissible fade show custom-alert" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
   <div id="city-cards" class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
     {% for city in cities %}
     <div id="city-section" class="col-lg-3 col-md-4 mb-4">
@@ -98,12 +91,9 @@
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">{{ city.city_name }}</h5>
           <p class="card-text">
-            {% if city.city_description|length <= 200 %}
-                {{ city.city_description }}
-            {% else %}
-                {{ city.city_description|slice(0, 200) }}...
-                <a href="{{ url_for('city_detail', city_id=city.id) }}">Read more</a>
-            {% endif %}
+            {% if city.city_description|length <= 50 %} {{ city.city_description }} {% else %} {{
+              city.city_description[:50] }}... <a href="{{ url_for('city_detail', city_id=city.id) }}">Read more</a>
+              {% endif %}
           </p>
           <div class="mt-auto">
             <a href="{{ url_for('city_detail', city_id=city.id) }}" class="btn btn-primary">View</a>
@@ -117,41 +107,54 @@
     <h2 class="pb-2 border-bottom">Why Explore With Us?</h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
       <div class="feature col">
-        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+        <div
+          class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
           <img src="{{ url_for('static', filename='images/briefcase.svg') }}" alt="briefcase" height="30">
         </div>
         <h3 class="fs-2">Professional</h3>
-        <p>We work as hard as we can to ensure that the memories, journeys and fun moments you will have are achieved stress-free. In this process, we offer you an interactive service with our professional team by renewing our destinations in Turkey every day with your feedback.</p>
+        <p>We work as hard as we can to ensure that the memories, journeys and fun moments you will have are achieved
+          stress-free. In this process, we offer you an interactive service with our professional team by renewing our
+          destinations in Turkey every day with your feedback.</p>
       </div>
       <div class="feature col">
-        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+        <div
+          class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
           <img src="{{ url_for('static', filename='images/bus-front.svg') }}" alt="bus-front" height="30">
         </div>
         <h3 class="fs-2">Our Aim</h3>
-        <p>At our core, we believe that traveling should be an exciting and positive experience, not stressful. By quickly bringing extraordinary destinations in Turkey to your front door, we hope to revolutionize the way people think about seeing new places and provide our customers with a better, more personalized experience.</p>
+        <p>At our core, we believe that traveling should be an exciting and positive experience, not stressful. By
+          quickly bringing extraordinary destinations in Turkey to your front door, we hope to revolutionize the way
+          people think about seeing new places and provide our customers with a better, more personalized experience.
+        </p>
       </div>
       <div class="feature col">
-        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-          <img src="{{ url_for('static', filename='images/chat-square-heart.svg') }}" alt="chat-square-heart" height="30">
+        <div
+          class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <img src="{{ url_for('static', filename='images/chat-square-heart.svg') }}" alt="chat-square-heart"
+            height="30">
         </div>
         <h3 class="fs-2">Personal Touch</h3>
-        <p> Whether you are traveling locally or across the country, we offer a service that suits your wishes. We aim to bring you the best places in the region you are looking for with our recommended list prepared with the feedback of our users.</p>
+        <p> Whether you are traveling locally or across the country, we offer a service that suits your wishes. We aim
+          to bring you the best places in the region you are looking for with our recommended list prepared with the
+          feedback of our users.</p>
       </div>
     </div>
   </div>
   <div class="container">
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
       </div>
       <div class="container mt-5">
         <div id="carouselExample" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             {% for image in images %}
             <div class="carousel-item {% if loop.first %}active{% endif %}">
-              <!-- <img class="d-block w-100" src="{{ url_for('static', filename=image) }}" alt="{{ image }}"> -->
               <img class="d-block w-100" src="/static/images/{{ image }}" alt="{{ image }}">
             </div>
             {% endfor %}
@@ -170,17 +173,15 @@
         </a>
         <p class="text-body-secondary">© 2024 Explore City</p>
       </div>
-      <div class="col mb-3">
-      </div>
+      <div class="col mb-3"></div>
       <div id="contact-section" class="col mb-3">
         <h5>Phone Number</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">90 342 456 7890
-            </a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">90 342 456 7890</a></li>
         </ul>
       </div>
       <div class="col mb-3">
-        <h5>Social Media </h5>
+        <h5>Social Media</h5>
         <ul class="nav flex-column">
           <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Twitter</a></li>
         </ul>
@@ -189,13 +190,17 @@
         <h5>E-mail</h5>
         <ul class="nav flex-column">
           <li class="nav-item mb-2"><a href="/contact" class="nav-link p-0 text-body-secondary">Email</a></li>
-
         </ul>
       </div>
     </footer>
   </div>
-  <script src="{{url_for('static',filename='js/index.js')}}" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+  <script src="{{url_for('static',filename='js/index.js')}}"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -42,3 +42,26 @@ padding-top: 20px;
     margin-bottom: 30px; /* Form ile yorumlar arası boşluk */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
 }
+#harita-container {
+    display: flex;
+    justify-content: center; /* Harita bölümünü yatay olarak ortala */
+    align-items: center; /* Harita bölümünü dikey olarak ortala */
+    flex-direction: column; /* Harita bölümünü dikey olarak düzenle */
+    margin-top: 50px; /* Harita bölümü ile diğer içerik arasında boşluk bırak */
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px; /* Harita ile rota göster butonu arasında boşluk bırak */
+}
+
+#showRouteButton {
+    margin-top: 20px; /* Rota göster butonu ile footer arasında boşluk bırak */
+}
+.explore-info p {
+    overflow-wrap: break-word; /* Kelime kesme */
+    text-align: justify; /* Yazıyı sağa ve sola doğru genişlet */
+  }
+  
+

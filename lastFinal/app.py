@@ -14,6 +14,7 @@ from flask_admin.contrib.sqla import ModelView
 from random import choice
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 
 app = Flask(__name__)
 
@@ -31,6 +32,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Ensure SECRET_KEY is set
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or secrets.token_hex(24)
+
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize database
 db = SQLAlchemy(app)
@@ -55,7 +59,6 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(20))
     birthdate = db.Column(db.Date)
     gender = db.Column(db.String(10))
-    # Define a one-to-many relationship with comments
     comments = db.relationship('Comment', backref='user', lazy=True)
 
 class City(db.Model):
